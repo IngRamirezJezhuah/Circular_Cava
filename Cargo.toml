@@ -1,0 +1,11 @@
+[package]
+name = "circular_cava"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+libpulse-simple-binding= " 2.26"
+libpulse-binding = "2.26"
+rustfft = "6.2"
+num-complex = "0.4"
+
