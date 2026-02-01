@@ -1,0 +1,45 @@
+;; Todavía definimos la variable para que no de error el widget, 
+;; esta es la que esta estatica
+;;(defvar magnitudes "[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]")
+
+(deflisten magnitudes :initial "[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]"
+  "/home/djxs4n/Documentos/Programacion/proyectos_personales/circular_cava/target/release/circular_cava")
+
+(defwindow cava2
+  :monitor 0
+  :geometry (geometry :x "0px" 
+                      :y "0px" 
+                      :width "600px" 
+                      :height "600px" 
+                      :anchor "center")
+  :stacking "bottom"
+  :windowtype "desktop"
+  :wm-ignore false
+  (circular_base))
+
+(defwidget circular_base []
+  (box :class "main-container"
+    (overlay
+      ;; el pinche Círculo central
+      (box :class "core-circle" :halign "center" :valign "center")
+
+      ;; La wea del anillo exterior
+      (box :class "purple-dotted-ring" :halign "center" :valign "center")
+      
+      ;; las pinches Barras
+
+      (box :class "bars-overlay"
+           :halign "center"
+           :valign "center"
+           :space-evennly false 
+        (for i in "[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59]"
+          (box :class "bar-wrapper"
+               :angle "${i * 6}"
+            (box :class "bar"
+                 :valign "start"
+                 ;; 150px es el radio del círculo negro. 
+                 ;; La barra crece desde ahí hacia afuera.
+                 :style "min-height: ${magnitudes[i]}px; margin-top: 155px;"))))
+    )
+  )
+)

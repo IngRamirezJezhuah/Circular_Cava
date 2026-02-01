@@ -39,7 +39,7 @@ fn main() {
 	    let ptr = buffer.as_mut_ptr() as *mut u8;
  	    let len = buffer.len()* std::mem::size_of::<i16>();
 	    let slice = std::slice::from_raw_parts_mut(ptr, len);
-	    s.read(slice).unwrap(); //<- lee los datos de pulseaudio, no siempre le dire chingadera   
+	    s.read(slice).unwrap(); //<- lee los datos de pulseaudio, no siempre le dire chingadera
 	}
 //Ahora si esta chingadera hace que los numeros sean flowat y promedia los canales (Stereo -> Mono) para la fft pueda leerlo
         let mut input: Vec<Complex<f32>> = buffer
