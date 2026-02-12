@@ -1,0 +1,32 @@
+(defpoll hora :interval "1s" "date +%H:%M")
+(defpoll fecha :interval "1h" "date '+%A,%d de %B'")
+
+(defwindow glava2
+  :geometry (geometry 
+            :x "750px"
+            :y "300px"
+            :widht "450px"
+            :height "450px"
+            :anchor "top left")
+  :staking "bottom"
+  :windowtype "desktop"
+  :wm-ignore false
+  (circ_1))
+
+(defwidget circ_1 []
+  (box :class "contenedor" :orientation "h" :space-evenly false
+    ;; Espacio para texto
+    (box :orientation "v" :space-evenly false
+      (label :text hora :class "estilo-hora")
+      (label :text fecha :class "estilo-fecha")
+    (box :class "circulo" 
+         :orientation "v"
+         :widht "100px"
+         :height "100px"
+         :space-evenly false
+      (box :class "lineas"
+           :orientation "v"
+           :space-evenly false))
+    )
+   )
+  )

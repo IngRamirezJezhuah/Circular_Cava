@@ -9,6 +9,7 @@ impl AudioCapturer {
     pub fn new() -> Self {
         Self {
             buffer: Arc::new(Mutex::new(vec![0.0; 2048])),
+//este buffer es de 2048 que significa, bueno es la resolucion de la fft
         }
     }
 
@@ -18,23 +19,27 @@ impl AudioCapturer {
         let device = host.default_input_device()
             .expect("No se encontró dispositivo de entrada (asegúrate de tener un monitor de PulseAudio activo)");
 
-        let config = device.default_input_config().unwrap();
+        let config = device.default_input_config().expect("Error al obtener la config del audio");
         let buffer_clone = Arc::clone(&self.buffer);
 
+    std::thread::spawn(move || {
         let stream = device.build_input_stream(
             &config.into(),
             move |data: &[f32], _: &_| {
                 if let Ok(mut b) = buffer_clone.lock() {
-                    // Copiamos los datos del sistema a nuestro buffer interno
-                    *b = data.to_vec();
+                    let len = data.len();
+                    if b.len() >= data.len {
+                        b.drain(0..len)
+                            b.extend_from_slice(data);
+                    }
                 }
             },
-            |err| eprintln!("Error en el stream de audio: {}", err),
+            |err| eprintln!("error en el stream: {}", err),
             None
         ).unwrap();
-
         stream.play().unwrap();
-        // Nota: El stream debe vivir para seguir capturando
-        std::mem::forget(stream); 
-    }
+        //esta chingadera de abajo mantiene el hilo vivo
+        loop { std::thread::sleep(std::time::Duration::from_millis(100)); }
+    });
+  }
 }

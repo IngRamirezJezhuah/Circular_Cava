@@ -1,17 +1,25 @@
 [package]
 name = "circular_cava"
-version = "0.1.0"
-edition = "2026"
+version = "2.1.0"
+edition = "2021"
 authors = "Djxs4n <ramirezalvaradodavidjezhuah@gmail.com>"
 description = "Estoy cansado de que glava no jale asi que hare mi propia version"
 
 [dependencies]
 raylib = "5.0" #<-para motor grafico simple y rapido segun san google
 
-cpla = "0.15" #<-para el audio cpal me hara un parotote ademas de ser estable
+cpal = "0.15" #<-para el audio cpal me hara un parotote ademas de ser estable
 
 rustfft = "6.1" #<-para los calculos de la frecuencia del audio el fft
 
 raylib-sys = "5.0" #<-para los calculos de los puntos del circulo (sen,cos,vetc y esas mamadas)
 
 lazy_static = "1.4" #<- para manejar configuraciones globales si es necesario
+libpulse-simple-binding= " 2.26"
+
+libpulse-binding = "2.26"
+
+rustfft = "6.2"
+
+num-complex = "0.4"
+

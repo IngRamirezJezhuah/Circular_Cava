@@ -1,0 +1,15 @@
+Explicacion de  lo que estamos hacinedo
+
+Para que le vizualizador se vea "suave" como Cava y no
+a saltos , eh cambiado la logica de captura
+
+Thread interno:
+esta cosa captura el hilo en el que esta, asi la pantalla va a 60hz o a 144hz, y el audio no se detiene
+
+Drain & Extend:
+EM lugar de reemplazar todo el tufe, este quita un pedazo 
+del viejo y mete lo nuevo, esto crea una sensacion de
+continuidad en la onda
+
+FttReady:
+ el tamaño de 2048 es 2, lo que hace que la libreria de rustfft vuele en la velocidad
