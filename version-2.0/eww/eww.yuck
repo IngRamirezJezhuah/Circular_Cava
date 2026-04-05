@@ -2,13 +2,15 @@
 (defpoll fecha :interval "1h" "date '+%A,%d de %B'")
 
 (defwindow glava2
+  :monitor 0
   :geometry (geometry 
             :x "750px"
             :y "300px"
             :widht "450px"
             :height "450px"
             :anchor "top left")
-  :staking "bottom"
+  :staking "bottom" 
+  :focusable false
   :windowtype "desktop"
   :wm-ignore false
   (circ_1))
