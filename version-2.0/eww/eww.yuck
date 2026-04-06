@@ -1,34 +1,51 @@
 (defpoll hora :interval "1s" "date +%H:%M")
 (defpoll fecha :interval "1h" "date '+%A,%d de %B'")
 
+;;importacion del archivo de metadata lo que hace lso datos json
+(deflisten musica :initial "{}" "./src/get_metadata.sh")
+;; la mare que hace uso del svg lo que lo actualiza creo...
+(deflisten ruta_espectro :initial "" "./target/release/circular_cava")
+
 (defwindow glava2
   :monitor 0
   :geometry (geometry 
             :x "750px"
             :y "300px"
-            :widht "450px"
+            :width "450px"
             :height "450px"
             :anchor "top left")
-  :staking "bottom" 
+  :stacking "bg"
+  :exclusive false
   :focusable false
   :windowtype "desktop"
-  :wm-ignore false
+  ;; wm-ignore false por si acaso
   (circ_1))
 
 (defwidget circ_1 []
-  (box :class "contenedor" :orientation "h" :space-evenly false
-    ;; Espacio para texto
-    (box :orientation "v" :space-evenly false
-      (label :text hora :class "estilo-hora")
-      (label :text fecha :class "estilo-fecha")
-    (box :class "circulo" 
-         :orientation "v"
-         :widht "100px"
-         :height "100px"
-         :space-evenly false
-      (box :class "lineas"
+  (box :class "contenedor" :orientation "h" 
+                           :space-evenly false
+                           :halign "center"
+                           :valing "center"
+;;overlay lo que hace es que me permite poner cosas enicma de otros
+    (overlay 
+      ;;capa1 el espectograma de svg que hice en rust
+      (image :path ruta_espectro
+             :image-width 400
+             :image-height 400
+             :class "espectro-visual")
+      (box :class "circulo"
            :orientation "v"
-           :space-evenly false))
+           :width "120"
+           :height "120"
+           :space-evenly false
+           :halign "center"
+           :valing "center"
+        (box :orientation "v" :space-evenly false :halign "center"
+          (label :text hora :class "estilo-hora")
+          (label :text fecha :class "estilo-fecha")
+          (label :text {musica.title != "null" ? musica.title : "Silencio..."} :class "estilo-cancion" :limit-width 20)
+        )
+      )
     )
-   )
   )
+)

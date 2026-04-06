@@ -19,7 +19,7 @@ impl Visualizador {
         let fft = self.planner.plan_fft_forward(buffer.len());
         fft.process(&mut buffer);
 
-        // Tomamos la magnitud y agrupamos en barras
+        //aqui Tomo la magnitud y lo agrupo en barras
         let spectrum: Vec<f32> = buffer.iter()
             .take(n / 2)
             .map(|c| c.norm())
@@ -45,7 +45,7 @@ impl Visualizador {
             let y1 = centro.1 + radio_base * angulo.sin();
 
             // Punto final (longitud de la barra basada en audio)
-            let extension = amplitud * 500.0; // Sensibilidad ajustable
+            let extension = (amplitud * 500.0).clamp(0.0, 80.0); // Sensibilidad ajustable
             let x2 = centro.0 + (radio_base + extension) * angulo.cos();
             let y2 = centro.1 + (radio_base + extension) * angulo.sin();
 
