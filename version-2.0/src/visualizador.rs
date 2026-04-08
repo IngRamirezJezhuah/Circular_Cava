@@ -13,7 +13,7 @@ impl Visualizador {
     pub fn procesar_audio(&mut self, data: &[f32], num_barras: usize) -> Vec<f32> {
         let n = data.len();
         let mut buffer: Vec<Complex<f32>> = data.iter()
-            .map(|&x| Complex { re: x, im: 0.0 })
+            .map(|&x| Complex { re: x, im: 0.01 })
             .collect();
 
         let fft = self.planner.plan_fft_forward(buffer.len());
@@ -45,7 +45,7 @@ impl Visualizador {
             let y1 = centro.1 + radio_base * angulo.sin();
 
             // Punto final (longitud de la barra basada en audio)
-            let extension = (amplitud * 500.0).clamp(0.0, 80.0); // Sensibilidad ajustable
+            let extension = (amplitud * 2500.0).clamp(5.0, 200.0); // Sensibilidad ajustable
             let x2 = centro.0 + (radio_base + extension) * angulo.cos();
             let y2 = centro.1 + (radio_base + extension) * angulo.sin();
 

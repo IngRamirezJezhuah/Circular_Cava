@@ -18,13 +18,14 @@ fn main() {
     let centro = (svg_size /2.0, svg_size /2.0);
     let radio_base = 120.0;
     let num_barras = 60;
+    let mut frames = 0;
 
     loop {
         let datos_raw = capturador.buffer.lock().unwrap().clone();
         let barras = vis.procesar_audio(&datos_raw, num_barras);
         let lineas = vis.calcular_puntos_circulo(&barras, centro, radio_base);
 
-        let mut svg = format!("<svg width=\"{}\" height=\"{}\" xmlns=\"http://www.w3.org/2000/svg\">", svg_size, svg_size);
+        let mut svg = format!("<svg width=\"{}\" height=\"{}\" viewBox=\"0 0 {} {}\" xmlns=\"http://www.w3.org/2000/svg\">", svg_size, svg_size, svg_size, svg_size);
 
         for (x1, y1, x2, y2) in lineas {
             svg.push_str(&format!(
@@ -34,10 +35,12 @@ fn main() {
             ));
         } 
         svg.push_str("</svg>");
-        // la wea que imprime el stdout
-        std::fs::write("/tmp/espectro.svg", &svg).unwrap();
-        let timestamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_millis();
-        println!("/tmp/espectro.svg?v={}", timestamp);
+
+	frames = (frames +1) % 2;
+        let ruta_archivo = format!("/tmp/espectro_{}.svg", frames);
+        std::fs::write(&ruta_archivo, &svg).unwrap();
+        //let timestamp = std::time::SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap().as_millis();
+        println!("{}", ruta_archivo);
         thread::sleep(Duration::from_millis(16));
     }
 }
