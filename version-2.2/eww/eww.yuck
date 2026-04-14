@@ -2,9 +2,9 @@
 (defpoll fecha :interval "1h" "date '+%A,%d de %B'")
 
 ;;importacion del archivo de metadata lo que hace lso datos json
-(deflisten musica :initial "{}" "./src/get_metadata.sh")
+;; (deflisten musica :initial "{}" "./src/get_metadata.sh")
+
 ;; la mare que hace uso del svg lo que lo actualiza creo...
-(deflisten ruta_espectro :initial "" "./target/release/circular_cava")
 
 (defwindow glava2
   :monitor 0
@@ -21,6 +21,10 @@
   ;; wm-ignore false por si acaso
   (circ_1))
 
+
+
+(deflisten datos_espectro :initial '{ "path": ""}' "./target/release/circular_cava")
+
 (defwidget circ_1 []
   (box :class "contenedor" :orientation "h" 
                            :space-evenly false
@@ -29,10 +33,14 @@
 ;;overlay lo que hace es que me permite poner cosas enicma de otros
     (overlay 
       ;;capa1 el espectograma de svg que hice en rust
-      (image :path ruta_espectro
-             :image-width 400
-             :image-height 400
-             :class "espectro-visual")
+      (literal :content
+        "<svg width='450' height='450' viewBox='0 0 450 450'>
+          <path d='${datos_espectro.path}'
+                stroke='#a855f7'
+                stroke-width='4'
+                stroke-linecap='round' 
+                 fill='none'/>
+        </svg>")
       (box :class "circulo"
            :orientation "v"
            :width "120"

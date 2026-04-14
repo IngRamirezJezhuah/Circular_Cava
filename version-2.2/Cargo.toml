@@ -10,4 +10,10 @@ description = "Estoy cansado de que glava no jale asi que hare mi propia version
 cpal = "0.15" #<-para el audio cpal me hara un parotote ademas de ser estable
 
 rustfft = "6.1" #<- trasnforma el audio en frecuencias (mates)
+num-complex= "0.4"
+
+serde = { version = "1.0", features = [ "derive" ] }
+serde_json = "1.0"
+
+extrapolator = "0.1" #<- suavizador de señales pa que se vea wonito 
 

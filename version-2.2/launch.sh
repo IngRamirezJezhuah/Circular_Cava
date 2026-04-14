@@ -2,7 +2,7 @@
 
 echo "Compilando motor de audio..."
 
-PWD="$HOME/Documentos/Programacion/Proyectos-EWW/Circular_Cava/version-2.0/eww"
+UPWD="$HOME/Documentos/Programacion/Proyectos-EWW/Circular_Cava/version-2.2/eww"
 
 cargo build --release
 
