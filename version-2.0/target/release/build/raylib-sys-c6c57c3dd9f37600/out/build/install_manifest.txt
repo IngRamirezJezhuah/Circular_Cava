@@ -1,0 +1,7 @@
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/lib/libraylib.a
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/include/raylib.h
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/include/rlgl.h
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/include/raymath.h
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/lib/pkgconfig/raylib.pc
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/lib/cmake/raylib/raylib-config-version.cmake
+/home/djxs4n/Documentos/Programacion/proyectos_personales/Circular_Cava/version-2.0/target/release/build/raylib-sys-c6c57c3dd9f37600/out/lib/cmake/raylib/raylib-config.cmake

@@ -3,11 +3,15 @@ use std::f32::consts::PI;
 
 pub struct Visualizador {
     planner: FftPlanner<f32>,
+    prev_barras: Vec<f32>,
 }
 
 impl Visualizador {
     pub fn new() -> Self {
-        Self { planner: FftPlanner::new() }
+        Self { 
+            planner: FftPlanner::new(),
+            prev_barras: Vec::new(),
+        }
     }
 
     pub fn procesar_audio(&mut self, data: &[f32], num_barras: usize) -> Vec<f32> {
@@ -26,9 +30,19 @@ impl Visualizador {
             .collect();
 
         let chunk_size = (spectrum.len() / num_barras).max(1);
-        spectrum.chunks(chunk_size)
+        let mut nuevas_barras: Vec<f32> = spectrum.chunks(chunk_size)
             .map(|chunk| chunk.iter().sum::<f32>() / chunk.len() as f32)
-            .collect()
+            .collect();
+
+        if self.prev_barras.is_empty() { self.prev_barras = vec![0.0; num_barras];}
+
+        for i in 0..nuevas_barras.len().min(self.prev_barras.len()) {
+            if nuevas_barras[i] < self.prev_barras[i]{
+                nuevas_barras[i] = self.prev_barras[i];
+            }
+            self.prev_barras[i] = nuevas_barras[i]
+        }
+        nuevas_barras
     }
 
     // Aquí está el secreto del "Cava Circular"
@@ -38,19 +52,19 @@ impl Visualizador {
         let paso_angular = (2.0 * PI) / barras.len() as f32;
 
         for (i, &amplitud) in barras.iter().enumerate() {
-            let angulo = i as f32 * paso_angular;
+            let angulo = i as f32 * paso_angular - (PI / 2.0);
             
             // Punto de inicio (borde del círculo central)
             let x1 = centro.0 + radio_base * angulo.cos();
             let y1 = centro.1 + radio_base * angulo.sin();
 
             // Punto final (longitud de la barra basada en audio)
-            let extension = amplitud * 500.0; // Sensibilidad ajustable
+            let extension = amplitud * 600.0; // Sensibilidad ajustable
             let x2 = centro.0 + (radio_base + extension) * angulo.cos();
             let y2 = centro.1 + (radio_base + extension) * angulo.sin();
 
             puntos.push((x1, y1, x2, y2));
-        }
+        };
         puntos
     }
 }

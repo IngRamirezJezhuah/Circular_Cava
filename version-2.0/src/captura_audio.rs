@@ -28,8 +28,8 @@ impl AudioCapturer {
             move |data: &[f32], _: &_| {
                 if let Ok(mut b) = buffer_clone.lock() {
                     let len = data.len();
-                    if b.len() >= data.len {
-                        b.drain(0..len)
+                    if b.len() >= len {
+                        b.drain(0..len);
                             b.extend_from_slice(data);
                     }
                 }
