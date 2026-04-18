@@ -1,0 +1,59 @@
+(defpoll hora :interval "1s" "date +%H:%M")
+(defpoll fecha :interval "1h" "date '+%A,%d de %B'")
+
+;;importacion del archivo de metadata lo que hace lso datos json
+;; (deflisten musica :initial "{}" "./src/get_metadata.sh")
+
+;; la mare que hace uso del svg lo que lo actualiza creo...
+
+(defwindow glava2
+  :monitor 0
+  :geometry (geometry 
+            :x "750px"
+            :y "300px"
+            :width "450px"
+            :height "450px"
+            :anchor "top left")
+  :stacking "bg"
+  :exclusive false
+  :focusable false
+  :windowtype "desktop"
+  ;; wm-ignore false por si acaso
+  (circ_1))
+
+
+
+(deflisten datos_espectro :initial '{ "path": ""}' "./target/release/circular_cava")
+
+(defwidget circ_1 []
+  (box :class "contenedor" :orientation "h" 
+                           :space-evenly false
+                           :halign "center"
+                           :valign "center"
+;;overlay lo que hace es que me permite poner cosas enicma de otros
+    (overlay 
+      ;;capa1 el espectograma de svg que hice en rust
+      (literal :content
+        "<svg width='450' height='450' viewBox='0 0 450 450'>
+          <path d='${datos_espectro.path}'
+                stroke='#a855f7'
+                stroke-width='4'
+                stroke-linecap='round' 
+                 fill='none'/>
+        </svg>")
+      (box :class "circulo"
+           :orientation "v"
+           :width "120"
+           :height "120"
+           :space-evenly false
+           :halign "center"
+           :valign "center"
+        (box :orientation "v" :space-evenly false :halign "center"
+          (label :text hora :class "estilo-hora")
+          (label :text fecha :class "estilo-fecha")
+          (label :text {musica.title != "null" ? musica.title : "Silencio..."} :class "estilo-cancion" :limit-width 20)
+        )
+      )
+    )
+  )
+)
